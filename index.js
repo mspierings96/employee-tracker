@@ -24,7 +24,7 @@ const options = () => {
         type: 'list',
         name: 'action',
         message: 'What would you like to do?',
-        choices: ['View All Employees', 'View all employees by department', 'Add employee','Add department', 'Remove employee', 'Update employee role', 'View all roles', 'Add role', 'Remove role']
+        choices: ['View All Employees', 'View all employees by department', 'Add employee','Add department', 'Update employee role', 'View all roles', 'Add role']
         }
     ])
 };
@@ -58,6 +58,14 @@ function init() {
 
         if(data.action === 'Add employee'){
             viewAddEmployee();
+        }
+
+        if(data.action === 'Add role'){
+            viewAddRole();
+        }
+
+        if(data.action === 'Update employee role'){
+            viewUpdateEmployee();
         }
 
     })
@@ -98,13 +106,82 @@ function viewAddDepartment() {
 
 function viewAddEmployee() {
     console.log("about to view all employees");
-    inquirer.prompt([{
-        name:'employee',
+    inquirer.prompt([
+        {
+        name:'first_name',
         type:'input',
-        message:'Whats the employees name',
+        message:'Whats the employees first name',
+        },
+        {
+        name: "last_name",
+        type: 'input',
+        message: 'What is the employees last name?',
+        },
+        {
+        name: 'role_id',
+        type: 'input',
+        message: 'Role ID Number',
+        },
+        {
+        name: 'manager_id',
+        type: 'input',
+        message: "If the employee has a manager, what is their ID number?"
+        }
+    ]).then(data =>{
+        connection.query('INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)',[data.firstName, data.lastName, data.id, data.managerID], function(err, results, fields) {
+            console.log(results); // results contains rows returned by server
+          }
+      );
+    })
+   
+}
 
-    }]).then(data =>{
-        connection.query('INSERT INTO employees (name) VALUES(?)',[data.employees], function(err, results, fields) {
+function viewAddRole() {
+    console.log("about to add new role");
+    inquirer.prompt([
+        {
+            name: 'title',
+            type: 'input',
+            message: 'Title of role:'
+
+        },
+        {
+            name: 'salary',
+            type: 'input',
+            message: 'Salary of role:'
+        },
+        {
+            name: 'role_id',
+            type: 'input',
+            message: 'Department ID Number'
+            
+        }
+    
+    
+    ]).then(data =>{
+        connection.query('INSERT INTO role (title, salary, department_id) VALUES(?, ?, ?)',[data.title, data.salary, data.department_id], function(err, results, fields) {
+            console.log(results); // results contains rows returned by server
+          }
+      );
+    })
+   
+}
+
+function viewUpdateEmployee() {
+    console.log("about to update new employee");
+    inquirer.prompt([
+        {
+            name: 'name',
+            type: 'input',
+            message: 'Enter the first name of the employee you wish to update:'
+        },
+        {
+            name: 'id',
+            type: 'input',
+            message: 'Enter the fole id you wish the employee to have.'
+        }
+]).then(data =>{
+        connection.query('UPDATE employee SET role_id = ?',[data.id, data.name], function(err, results, fields) {
             console.log(results); // results contains rows returned by server
           }
       );
