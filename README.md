@@ -11,7 +11,7 @@ Built with:
 - Javascript
 - inquirer
 
-Github Repo Link: https://mspierings96.github.io/Weather-Dashboard/
+Github Repo Link: 
 
 
 Video Tutorial

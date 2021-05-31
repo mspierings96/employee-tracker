@@ -4,7 +4,8 @@
   "description": "Employee Tracker",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node indexs.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/mspierings96/employee-tracker/issues"
   },
-  "homepage": "https://github.com/mspierings96/employee-tracker#readme"
+  "homepage": "https://github.com/mspierings96/employee-tracker#readme",
+  "dependencies": {
+    "inquirer": "^8.1.0",
+    "mysql2": "^2.2.5"
+  }
 }
