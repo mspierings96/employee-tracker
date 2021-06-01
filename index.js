@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
+const cTable = require('console.table');
 
-const PORT = process.env.PORT || 3001;
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -11,10 +11,11 @@ const connection = mysql.createConnection({
 
 
   connection.connect(function(err) {
-      console.log('errr connectiong!!!', err)
-    greeting();
-  }
-  )
+         if (err) {
+         console.log('errr connectiong!!!', err)
+     };
+       greeting();
+     });
 
 // message for user to select appropriate action
 
@@ -35,9 +36,6 @@ const greeting = () => {
     console.table( `WELCOME TO EMPLOYEE TRACKER`);
     init();
 };
-
-
-
 
 
 function init() {
@@ -74,15 +72,18 @@ function init() {
 function viewAllEmployees() {
     console.log("about to view all employees");
     connection.query('SELECT * FROM employees', function(err, results, fields) {
-          console.log(results); // results contains rows returned by server
+          console.table(results); // results contains rows returned by server
+          init();
         }
+    
     );
 }
 
 function viewAllEmployeesByDepartment() {
     console.log("about to view all employees by department");
     connection.query('SELECT * FROM departments', function(err, results, fields) {
-          console.log(results); // results contains rows returned by server
+          console.table(results); // results contains rows returned by server
+          init();
         }
     );
 }
@@ -96,7 +97,8 @@ function viewAddDepartment() {
 
     }]).then(data =>{
         connection.query('INSERT INTO departments (name) VALUES(?)',[data.department], function(err, results, fields) {
-            console.log(results); // results contains rows returned by server
+            console.table(results); // results contains rows returned by server
+            init();
           }
       );
     })
@@ -130,6 +132,7 @@ function viewAddEmployee() {
     ]).then(data =>{
         connection.query('INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)',[data.firstName, data.lastName, data.id, data.managerID], function(err, results, fields) {
             console.log(results); // results contains rows returned by server
+            init();
           }
       );
     })
@@ -160,7 +163,8 @@ function viewAddRole() {
     
     ]).then(data =>{
         connection.query('INSERT INTO role (title, salary, department_id) VALUES(?, ?, ?)',[data.title, data.salary, data.department_id], function(err, results, fields) {
-            console.log(results); // results contains rows returned by server
+            console.table(results); // results contains rows returned by server
+            init();
           }
       );
     })
@@ -178,15 +182,21 @@ function viewUpdateEmployee() {
         {
             name: 'id',
             type: 'input',
-            message: 'Enter the fole id you wish the employee to have.'
+            message: 'Enter the role id you wish the employee to have.'
         }
 ]).then(data =>{
         connection.query('UPDATE employee SET role_id = ?',[data.id, data.name], function(err, results, fields) {
-            console.log(results); // results contains rows returned by server
+            console.table(results); // results contains rows returned by server
+            init();
           }
       );
     })
    
+}
+
+function quit() {
+    console.log("Goodbye!");
+    process.exit();
 }
 
 
