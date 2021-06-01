@@ -6,14 +6,13 @@ A command line application designed to manage employees through the created SQL 
 
 Built with:
 
-- Express
 - mysql2
 - Javascript
 - inquirer
 
 Github Repo Link: 
 
-
+https://github.com/mspierings96/employee-tracker
 
 Video Tutorial
 
