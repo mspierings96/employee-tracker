@@ -40,7 +40,7 @@ const greeting = () => {
 
 function init() {
     options().then(data => {
-        console.log("are we working?", data);
+        console.log(data);
 
         if (data.action === 'View All Employees'){
             viewAllEmployees();
@@ -68,6 +68,10 @@ function init() {
 
         if(data.action === 'Update employee role'){
             viewUpdateEmployee();
+        }
+
+        if(data.action === 'quit'){
+            quit();
         }
 
     })

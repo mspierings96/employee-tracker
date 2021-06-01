@@ -20,4 +20,12 @@ VALUES
     (6, "Filing", 40000, NULL),
     (7, "Cleaning", 15000, NULL);
 
-
+INSERT INTO employees (id, first_name, last_name, role_id, manager_id)
+VALUES
+(1,	"Lebron", "James", 1, 2),
+(2,	"Jimmy", "Butler", 2, 3),
+(3,	"Tim", 	"Duncan", 3, 2),
+(4,	"Brooke", "Lopez", 4, 6),
+(5,	"Michael", "Jordan",5, 8);
+				
+				
