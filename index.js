@@ -25,7 +25,7 @@ const options = () => {
         type: 'list',
         name: 'action',
         message: 'What would you like to do?',
-        choices: ['View All Employees', 'View all employees by department', 'Add employee','Add department', 'Update employee role', 'View all roles', 'Add role']
+        choices: ['View All Employees', 'View all employees by department', 'View all roles','Add employee','Add department', 'Add role','Update employee role']
         }
     ])
 };
@@ -50,6 +50,10 @@ function init() {
             viewAllEmployeesByDepartment();
         }
 
+        if (data.action === 'View all roles'){
+            viewAllRoles();
+        }
+
         if (data.action === 'Add department'){
             viewAddDepartment();
         }
@@ -72,7 +76,7 @@ function init() {
 function viewAllEmployees() {
     console.log("about to view all employees");
     connection.query('SELECT * FROM employees', function(err, results, fields) {
-          console.log(results); // results contains rows returned by server
+          console.table(results); // results contains rows returned by server
           init();
         }
     
@@ -87,6 +91,17 @@ function viewAllEmployeesByDepartment() {
         }
     );
 }
+
+function viewAllRoles() {
+    console.log("about to view all roles");
+    connection.query('SELECT * FROM role', function(err, results, fields) {
+          console.table(results); // results contains rows returned by server
+          init();
+        }
+    
+    );
+}
+
 
 function viewAddDepartment() {
     console.log("about to add new department");
@@ -130,7 +145,7 @@ function viewAddEmployee() {
         message: "If the employee has a manager, what is their ID number?"
         }
     ]).then(data =>{
-        connection.query('INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)',[data.firstName, data.lastName, data.id, data.managerID], function(err, results, fields) {
+        connection.query('INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)',[data.first_name, data.last_name, data.role_id, data.manager_id], function(err, results, fields) {
             console.table(results); // results contains rows returned by server
             init();
           }
