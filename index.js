@@ -72,7 +72,7 @@ function init() {
 function viewAllEmployees() {
     console.log("about to view all employees");
     connection.query('SELECT * FROM employees', function(err, results, fields) {
-          console.table(results); // results contains rows returned by server
+          console.log(results); // results contains rows returned by server
           init();
         }
     
@@ -131,7 +131,7 @@ function viewAddEmployee() {
         }
     ]).then(data =>{
         connection.query('INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)',[data.firstName, data.lastName, data.id, data.managerID], function(err, results, fields) {
-            console.log(results); // results contains rows returned by server
+            console.table(results); // results contains rows returned by server
             init();
           }
       );
